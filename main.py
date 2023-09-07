@@ -7,13 +7,14 @@ from settings import Settings
 class AlienInvasion():
     """Class to manage game assets and behaviour"""
     
-    def __init__(self):
+    def __init__(self):   #Initializes the game, sets up the display, and creates a ship object.
         pygame.init()
         self.settings = Settings()
+
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
         
-        
+
         self.ship = Ship(self)
     
     
@@ -21,15 +22,23 @@ class AlienInvasion():
     def run_game(self):
         """Main loop fopr the game"""
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            self._update_screen()
+    def _check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:       #move the ship to the right
+                if event.key == pygame.K_RIGHT:
+                    self.ship.rect.x += 1
+    def _update_screen(self):
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+
+        pygame.display.flip()
             
-            """Redraw the screen during each pass through the loop"""
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blit()
-                    
-            pygame.display.flip()
+
+
 
 
 if __name__ == '__main__':

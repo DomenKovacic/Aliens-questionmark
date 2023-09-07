@@ -6,9 +6,14 @@ class Ship:
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
         
-        self.image = pygame.image.load('images/ufo-flying-space-isolated-style-free-vector.bmp')
+        self.image = pygame.image.load('/home/domen/Desktop/Quantecum/Alien-Invasion-Game/images/ufo-flying-space-isolated-style-free-vector.bmp')
         self.rect = self.image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
-    def blit(self):
+
+        self.moving_right = False
+    def update(self):
+        if self.moving_right:
+            self.rect.x += 1
+    def blitme(self):
         """Sets a ship in position"""
         self.screen.blit(self.image, self.rect)
